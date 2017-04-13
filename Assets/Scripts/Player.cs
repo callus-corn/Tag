@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 using System;
 
 public class Player : MonoBehaviour
 {
-    public event Action<GameObject,GameObject> onTauch = delegate { };
-    public int x=0;
+    public PlayerState state;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Awake()
     {
-        if (this.tag.Contains("It"))
-        {
-            if (collision.gameObject.tag.Contains("Player"))
-            {
-                onTauch(this.gameObject, collision.gameObject);
-                x++;
-            }
-        }
+        state = GetComponent<PlayerState>();
+    }
+
+    private void Start()
+    {
+        var tauch = GetComponent<Tauch>();
+        this.OnCollisionEnterAsObservable()
+            .Where(_ => state.isTauchable)
+            .Where(x => x.gameObject.GetComponent<Player>() != null)
+            .Select(x => x.gameObject.GetComponent<Player>())
+            .Subscribe(x => tauch.It(this, x));
     }
 }
