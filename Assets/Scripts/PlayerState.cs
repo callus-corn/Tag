@@ -11,7 +11,7 @@ public class PlayerState : MonoBehaviour
     public bool isTauchable { get; private set; }
     Subject<bool> subject = new Subject<bool>();
 
-    void Start()
+    void Awake()
     {
         ToHuman();
         subject.Delay(TimeSpan.FromSeconds(3))

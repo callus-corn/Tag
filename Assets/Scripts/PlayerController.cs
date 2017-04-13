@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     {
         var players = new List<GameObject>();
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
-        players[UnityEngine.Random.Range(0, players.Count)].GetComponent<Player>().state.ToStay();
+        var random = UnityEngine.Random.Range(0, players.Count);
+        players[random].GetComponent<PlayerState>().ToStay();
+        GameObject.Find("Tag").GetComponent<Tag>().target = players[random].transform;
     }
 }

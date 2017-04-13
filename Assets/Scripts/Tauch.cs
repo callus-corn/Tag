@@ -9,6 +9,7 @@ public class Tauch : MonoBehaviour
         if (tauchee.state.isHuman)
         {
             tauchee.state.ToStay();
+            GameObject.Find("Tag").GetComponent<Tag>().target = tauchee.gameObject.transform;
             taucher.state.ToHuman();
             Debug.Log("tauch! "+taucher.ToString());
         }
