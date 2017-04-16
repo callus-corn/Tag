@@ -6,11 +6,13 @@ public class Tauch : MonoBehaviour
 {
     public void It(Player taucher,Player tauchee)
     {
-        if (tauchee.state.isHuman)
+        var taucheeState = tauchee.gameObject.GetComponent<PlayerState>();
+        var taucherState = taucher.gameObject.GetComponent<PlayerState>();
+        if (taucheeState.isHuman)
         {
-            tauchee.state.ToStay();
+            taucheeState.ToStay();
             GameObject.Find("Tag").GetComponent<Tag>().target = tauchee.gameObject.transform;
-            taucher.state.ToHuman();
+            taucherState.ToHuman();
             Debug.Log("tauch! "+taucher.ToString());
         }
     }
