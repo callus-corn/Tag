@@ -11,17 +11,20 @@ public class AI : MonoBehaviour
     private void Awake()
     {
         move = new Vector3(0,0,0);
+        var tag = GameObject.Find("Tag").GetComponent<Tag>();
 
-        var root = new DecoratorNode(
-            () => GameObject.Find("Tag").GetComponent<Tag>().target != transform,
-            "DecoratorTest",
-            new ActionNode(() =>
-            {
-                var tag = GameObject.Find("Tag");
-                move = tag.transform.position - transform.position;
-                return true;
-            }, "test")
-            );
+        var root = new SelectorNode("/");
+        root.Add("/",new DecoratorNode("/IsIt",() => tag.target == this.gameObject.transform));
+        root.Add("/IsIt",new ActionNode("/IsIt/RunAfter",() => 
+                                                                {
+                                                                    move = GameObject.Find("Player").transform.position - this.transform.position;
+                                                                    return true;
+                                                                }));
+        root.Add("/", new ActionNode("/RunAway", () =>
+                                                  {
+                                                      move = this.transform.position - tag.target.position;
+                                                      return true;
+                                                  }));
 
         this.UpdateAsObservable()
             .Subscribe(_ => {

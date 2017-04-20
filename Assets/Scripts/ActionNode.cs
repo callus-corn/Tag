@@ -9,10 +9,15 @@ public class ActionNode : IBehaviourTree
     private string _key;
     Func<bool> _action;
 
-    public ActionNode(Func<bool> action,string key)
+    public ActionNode(string key, Func<bool> action)
     {
-        _action = action;
         _key = key;
+        _action = action;
+    }
+
+    public bool Add(string key,IBehaviourTree leaf)
+    {
+        return false;
     }
 
     public bool Excute()

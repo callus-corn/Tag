@@ -10,20 +10,29 @@ public class DecoratorNode:IBehaviourTree
     Func<bool> _condition;
     IBehaviourTree _leaf;
 
-    public DecoratorNode(Func<bool> condition, string key,IBehaviourTree leaf)
+    public DecoratorNode(string key,Func<bool> condition)
     {
-        _condition = condition;
         _key = key;
+        _condition = condition;
+    }
+
+    public DecoratorNode(string key,Func<bool> condition,IBehaviourTree leaf):this(key,condition)
+    {
         _leaf = leaf;
+    }
+
+    public bool Add(string key,IBehaviourTree leaf)
+    {
+        if (_key == key && _leaf == null)
+        {
+            _leaf = leaf;
+            return true;
+        }
+        return false;
     }
 
     public bool Excute()
     {
-        if (_condition())
-        {
-            _leaf.Excute();
-            return true;
-        }
-        return false;
+        return _condition() ? _leaf.Excute() : false;
     }
 }
