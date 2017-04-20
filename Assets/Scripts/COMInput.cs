@@ -15,7 +15,7 @@ public class COMInput : MonoBehaviour,IInputProvider
         
         this.UpdateAsObservable()
             .Subscribe(_ => {
-                _moveDirection.Value = new Vector3(ai.move.normalized.x * 0.9f, 0, ai.move.normalized.z * 0.9f);
+                _moveDirection.Value = new Vector3(ai.move.normalized.x * 0.95f, 0, ai.move.normalized.z * 0.95f);
             });
             
 	}
