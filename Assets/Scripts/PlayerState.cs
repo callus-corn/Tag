@@ -14,7 +14,7 @@ public class PlayerState : MonoBehaviour
     void Awake()
     {
         ToHuman();
-        subject.Delay(TimeSpan.FromSeconds(3))
+        subject.Delay(TimeSpan.FromSeconds(2))
                .Subscribe(_ => {
                    ToIt();
                    Debug.Log("tauchable");
